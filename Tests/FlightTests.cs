@@ -31,14 +31,31 @@ namespace Airline
 
       testList.Add(flightOne);
       List<Flight> resultList = Flight.GetAll();
-      
+
       Assert.Equal(testList, resultList);
     }
+
+    [Fact]
+    public void Test_FindFindsFlightInDatabase()
+    {
+      //Arrange
+      Flight testFlight = new Flight(1, "Portland", "Seattle", "On Time");
+      testFlight.Save();
+
+      //Act
+      Flight result = Flight.Find(testFlight.GetId());
+
+      //Assert
+      Assert.Equal(testFlight, result);
+    }
+
+    
 
 
     public void Dispose()
     {
       Flight.DeleteAll();
+      City.DeleteAll();
     }
   }
 }
